@@ -223,6 +223,19 @@ const initialPeople = [
   { id: "p12", name: "Willis", hours: 0, maxHours: 30 },
 ];
 
+// J.B. Done
+// TODO: Basim done besides mandatory days off
+// TODO: Chelsee
+// TODO: Colin
+// TODO: Edward
+// TODO: Kid Diddler
+// TODO: Lawrence
+// TODO: Matt
+// TODO: Michael L
+// TODO: Nicholas
+// TODO: Q
+// TODO: Willis
+
 // --------------------------------------------------
 // RULES
 // --------------------------------------------------
@@ -271,6 +284,97 @@ const rules = {
     "ite-thu-1",
     "ite-fri-1",
     "ite-sat-1",
+  ],
+
+  p5: [
+    "ank-sun-1",
+    "ank-mon-1",
+    "ank-tue-1",
+    "ank-wed-1",
+    "ank-thu-1",
+    "ank-fri-1",
+    "ank-sat-1",
+    "sf-sun-1",
+    "sf-mon-1",
+    "sf-tue-1",
+    "sf-wed-1",
+    "sf-thu-1",
+    "sf-fri-1",
+    "sf-sat-1",
+    "lin-sun-1",
+    "lin-mon-1",
+    "lin-tue-1",
+    "lin-wed-1",
+    "lin-thu-1",
+    "lin-fri-1",
+    "lin-sat-1",
+    "fre-sun-1",
+    "fre-mon-1",
+    "fre-tue-1",
+    "fre-wed-1",
+    "fre-thu-1",
+    "fre-fri-1",
+    "fre-sat-1",
+    "ber-sun-1",
+    "ber-mon-1",
+    "ber-tue-1",
+    "ber-wed-1",
+    "ite-sun-1",
+    "ite-mon-1",
+    "ite-tue-1",
+    "ite-wed-1",
+    "ite-thu-1",
+    "ite-fri-1",
+    "ite-sat-1",
+
+    "lin-sun-2",
+    "lin-mon-2",
+    "lin-tue-2",
+    "lin-wed-2",
+    "lin-thu-2",
+    "lin-fri-2",
+    "lin-sat-2",
+    "fre-sun-2",
+    "fre-mon-2",
+    "fre-tue-2",
+    "fre-wed-2",
+    "fre-thu-2",
+    "fre-fri-2",
+    "fre-sat-2",
+    "ber-sun-2",
+    "ber-mon-2",
+    "ber-tue-2",
+    "ber-wed-2",
+    "ber-thu-2",
+    "ber-fri-2",
+    "ite-sun-2",
+    "ite-mon-2",
+    "ite-tue-2",
+    "ite-wed-2",
+    "ite-thu-2",
+    "ite-fri-2",
+    "ite-sat-2",
+    "lin-sun-3",
+    "lin-mon-3",
+    "lin-tue-3",
+    "lin-wed-3",
+    "lin-thu-3",
+    "lin-fri-3",
+    "lin-sat-3",
+    "fre-sun-3",
+    "fre-mon-3",
+    "fre-tue-3",
+    "fre-wed-3",
+    "fre-thu-3",
+    "fre-fri-3",
+    "fre-sat-3",
+    "ite-sun-3",
+    "ite-mon-3",
+    "ite-tue-3",
+    "ite-wed-3",
+    "ite-thu-3",
+    "ite-fri-3",
+    "ite-sat-3",
   ],
   p2: ["mon-1", "tue-1"],
 };
