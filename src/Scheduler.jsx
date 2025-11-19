@@ -5,7 +5,7 @@ import "./Scheduler.css";
 // TIME FUNCTIONS
 // --------------------------------------------------
 
-// Convert your H.MM style into minutes:
+// Convert H.MM style into minutes:
 // 6      -> 6h 0m
 // 6.15   -> 6h 15m
 // 4.45   -> 4h 45m
@@ -47,27 +47,27 @@ function formatMinutesForDisplay(totalMinutes) {
 // RED if current < max - 10h
 // YELLOW if between 10h and 5h below max
 // GREEN if within 5h below max up to 5h over max
-// RED + ❗ if current > max + 5h
+// RED + !! if current > max + 5h
 //
 function getPersonColor(person) {
   const current = person.hours; // minutes
   const max = person.maxHours * 60; // minutes
 
-  // More than 5 hours over max → RED + ALERT
+  // More than 5 hours over max = RED + ALERT
   if (current > max + 300) return "red-person alert";
 
-  // More than 10 hours below max → RED
+  // More than 10 hours below max = RED
   if (current < max - 600) return "red-person";
 
-  // Between 10 hours and 5 hours below max → YELLOW
+  // Between 10 hours and 5 hours below max = YELLOW
   if (current >= max - 600 && current < max - 300) return "yellow-person";
 
-  // Within 5 hours below max up to 5 hours over max → GREEN
+  // Within 5 hours below max up to 5 hours over max = GREEN
   return "green-person";
 }
 
 // --------------------------------------------------
-// CONFIG — ALL YOUR SHIFTS EXACTLY AS GIVEN
+// CONFIG
 // --------------------------------------------------
 
 const shifts = [
@@ -126,7 +126,7 @@ const shifts = [
   { id: "wed-6", day: "Wed", label: "1st Run", hours: 2.5 },
 ];
 
-// PEOPLE — hours stored as MINUTES, with maxHours
+// PEOPLE - hours stored as MINUTES, with maxHours
 const initialPeople = [
   { id: "p1", name: "Nicholas", hours: 0, maxHours: 40 },
   { id: "p2", name: "Basim", hours: 0, maxHours: 40 },
@@ -144,7 +144,7 @@ const rules = {
     "ank-thu-1",
     "ank-fri-1",
     "ank-sat-1",
-  ], // example, adjust if you want
+  ],
   p2: ["mon-1", "tue-1"],
 };
 
@@ -163,7 +163,7 @@ function chunkArray(arr, size) {
 }
 
 // --------------------------------------------------
-// COMPONENT (Tap driver → tap slot, mobile-friendly)
+// COMPONENT
 // --------------------------------------------------
 
 export default function Scheduler() {
@@ -179,7 +179,7 @@ export default function Scheduler() {
     const assignedPersonId = shiftAssignments[slot.id];
     const slotMinutes = hmToMinutes(slot.hours);
 
-    // NO DRIVER SELECTED → tap slot to clear it (if occupied)
+    // NO DRIVER SELECTED = tap slot to clear it (if occupied)
     if (!selectedPersonId) {
       if (!assignedPersonId) return;
 
@@ -243,8 +243,7 @@ export default function Scheduler() {
   }
 
   function getSlotColor(slot) {
-    // We only color slots based on assignment + restriction relative
-    // to the currently selected driver (if any)
+    // Only color slots based on assignment + restriction
     if (!selectedPersonId) return "slot";
 
     const occupied = shiftAssignments[slot.id];
