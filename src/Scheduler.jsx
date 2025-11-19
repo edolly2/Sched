@@ -71,6 +71,10 @@ function getPersonColor(person) {
 // --------------------------------------------------
 
 const shifts = [
+  // --------------------------------------------------
+  // Overnight
+  // --------------------------------------------------
+
   // Ankeny
   { id: "ank-sun-1", day: "Sun", label: "Overnight Run", hours: 6 },
   { id: "ank-mon-1", day: "Mon", label: "Overnight Run", hours: 6 },
@@ -89,7 +93,11 @@ const shifts = [
   { id: "sf-fri-1", day: "Fri", label: "Overnight Run", hours: 6 },
   { id: "sf-sat-1", day: "Sat", label: "Overnight Run", hours: 6 },
 
-  // Bermuda
+  // --------------------------------------------------
+  // 1st Run
+  // --------------------------------------------------
+
+  // Bermuda 1
   { id: "ber-sun-1", day: "Sun", label: "1st Run", hours: 6.15 },
   { id: "ber-mon-1", day: "Mon", label: "1st Run", hours: 6.15 },
   { id: "ber-tue-1", day: "Tue", label: "1st Run", hours: 6.15 },
@@ -98,7 +106,7 @@ const shifts = [
   { id: "ber-fri-1", day: "Fri", label: "1st Run", hours: 6.15 },
   { id: "ber-sat-1", day: "Sat", label: "1st Run", hours: 6.15 },
 
-  // Lincoln
+  // Lincoln 1
   { id: "lin-sun-1", day: "Sun", label: "1st Run", hours: 4.5 },
   { id: "lin-mon-1", day: "Mon", label: "1st Run", hours: 4.5 },
   { id: "lin-tue-1", day: "Tue", label: "1st Run", hours: 4.5 },
@@ -107,7 +115,7 @@ const shifts = [
   { id: "lin-fri-1", day: "Fri", label: "1st Run", hours: 4.5 },
   { id: "lin-sat-1", day: "Sat", label: "1st Run", hours: 4.5 },
 
-  // Fremont
+  // Fremont 1
   { id: "fre-sun-1", day: "Sun", label: "1st Run", hours: 4.45 },
   { id: "fre-mon-1", day: "Mon", label: "1st Run", hours: 4.45 },
   { id: "fre-tue-1", day: "Tue", label: "1st Run", hours: 4.45 },
@@ -116,7 +124,7 @@ const shifts = [
   { id: "fre-fri-1", day: "Fri", label: "1st Run", hours: 4.45 },
   { id: "fre-sat-1", day: "Sat", label: "1st Run", hours: 4.45 },
 
-  // ITE
+  // ITE 1
   { id: "ite-sun-1", day: "Sun", label: "1st Run", hours: 2.5 },
   { id: "ite-mon-1", day: "Mon", label: "1st Run", hours: 2.5 },
   { id: "ite-tue-1", day: "Tue", label: "1st Run", hours: 2.5 },
@@ -124,6 +132,77 @@ const shifts = [
   { id: "ite-thu-1", day: "Thu", label: "1st Run", hours: 2.5 },
   { id: "ite-fri-1", day: "Fri", label: "1st Run", hours: 2.5 },
   { id: "ite-sat-1", day: "Sat", label: "1st Run", hours: 2.5 },
+
+  // --------------------------------------------------
+  // 2nd Run
+  // --------------------------------------------------
+
+  // Bermuda 2
+  { id: "ber-sun-2", day: "Sun", label: "2nd Run", hours: 6.15 },
+  { id: "ber-mon-2", day: "Mon", label: "2nd Run", hours: 6.15 },
+  { id: "ber-tue-2", day: "Tue", label: "2nd Run", hours: 6.15 },
+  { id: "ber-wed-2", day: "Wed", label: "2nd Run", hours: 6.15 },
+  { id: "ber-thu-2", day: "Thu", label: "2nd Run", hours: 6.15 },
+  { id: "ber-fri-2", day: "Fri", label: "2nd Run", hours: 6.15 },
+  { id: "ber-sat-2", day: "Sat", label: "2nd Run", hours: 6.15 },
+
+  // Lincoln 2
+  { id: "lin-sun-2", day: "Sun", label: "2nd Run", hours: 4.5 },
+  { id: "lin-mon-2", day: "Mon", label: "2nd Run", hours: 4.5 },
+  { id: "lin-tue-2", day: "Tue", label: "2nd Run", hours: 4.5 },
+  { id: "lin-wed-2", day: "Wed", label: "2nd Run", hours: 4.5 },
+  { id: "lin-thu-2", day: "Thu", label: "2nd Run", hours: 4.5 },
+  { id: "lin-fri-2", day: "Fri", label: "2nd Run", hours: 4.5 },
+  { id: "lin-sat-2", day: "Sat", label: "2nd Run", hours: 4.5 },
+
+  // Fremont 2
+  { id: "fre-sun-2", day: "Sun", label: "2nd Run", hours: 4.45 },
+  { id: "fre-mon-2", day: "Mon", label: "2nd Run", hours: 4.45 },
+  { id: "fre-tue-2", day: "Tue", label: "2nd Run", hours: 4.45 },
+  { id: "fre-wed-2", day: "Wed", label: "2nd Run", hours: 4.45 },
+  { id: "fre-thu-2", day: "Thu", label: "2nd Run", hours: 4.45 },
+  { id: "fre-fri-2", day: "Fri", label: "2nd Run", hours: 4.45 },
+  { id: "fre-sat-2", day: "Sat", label: "2nd Run", hours: 4.45 },
+
+  // ITE 2
+  { id: "ite-sun-2", day: "Sun", label: "2nd Run", hours: 2.5 },
+  { id: "ite-mon-2", day: "Mon", label: "2nd Run", hours: 2.5 },
+  { id: "ite-tue-2", day: "Tue", label: "2nd Run", hours: 2.5 },
+  { id: "ite-wed-2", day: "Wed", label: "2nd Run", hours: 2.5 },
+  { id: "ite-thu-2", day: "Thu", label: "2nd Run", hours: 2.5 },
+  { id: "ite-fri-2", day: "Fri", label: "2nd Run", hours: 2.5 },
+  { id: "ite-sat-2", day: "Sat", label: "2nd Run", hours: 2.5 },
+
+  // --------------------------------------------------
+  // 3rd Run
+  // --------------------------------------------------
+
+  // Lincoln 3
+  { id: "lin-sun-3", day: "Sun", label: "3rd Run", hours: 4.5 },
+  { id: "lin-mon-3", day: "Mon", label: "3rd Run", hours: 4.5 },
+  { id: "lin-tue-3", day: "Tue", label: "3rd Run", hours: 4.5 },
+  { id: "lin-wed-3", day: "Wed", label: "3rd Run", hours: 4.5 },
+  { id: "lin-thu-3", day: "Thu", label: "3rd Run", hours: 4.5 },
+  { id: "lin-fri-3", day: "Fri", label: "3rd Run", hours: 4.5 },
+  { id: "lin-sat-3", day: "Sat", label: "3rd Run", hours: 4.5 },
+
+  // Fremont 3
+  { id: "fre-sun-3", day: "Sun", label: "3rd Run", hours: 4.45 },
+  { id: "fre-mon-3", day: "Mon", label: "3rd Run", hours: 4.45 },
+  { id: "fre-tue-3", day: "Tue", label: "3rd Run", hours: 4.45 },
+  { id: "fre-wed-3", day: "Wed", label: "3rd Run", hours: 4.45 },
+  { id: "fre-thu-3", day: "Thu", label: "3rd Run", hours: 4.45 },
+  { id: "fre-fri-3", day: "Fri", label: "3rd Run", hours: 4.45 },
+  { id: "fre-sat-3", day: "Sat", label: "3rd Run", hours: 4.45 },
+
+  // ITE 3
+  { id: "ite-sun-3", day: "Sun", label: "3rd Run", hours: 2.5 },
+  { id: "ite-mon-3", day: "Mon", label: "3rd Run", hours: 2.5 },
+  { id: "ite-tue-3", day: "Tue", label: "3rd Run", hours: 2.5 },
+  { id: "ite-wed-3", day: "Wed", label: "3rd Run", hours: 2.5 },
+  { id: "ite-thu-3", day: "Thu", label: "3rd Run", hours: 2.5 },
+  { id: "ite-fri-3", day: "Fri", label: "3rd Run", hours: 2.5 },
+  { id: "ite-sat-3", day: "Sat", label: "3rd Run", hours: 2.5 },
 ];
 
 // PEOPLE - hours stored as MINUTES, with maxHours
@@ -152,6 +231,41 @@ const rules = {
     "ank-thu-1",
     "ank-fri-1",
     "ank-sat-1",
+    "sf-sun-1",
+    "sf-mon-1",
+    "sf-tue-1",
+    "sf-wed-1",
+    "sf-thu-1",
+    "sf-fri-1",
+    "sf-sat-1",
+    "lin-sun-1",
+    "lin-mon-1",
+    "lin-tue-1",
+    "lin-wed-1",
+    "lin-thu-1",
+    "lin-fri-1",
+    "lin-sat-1",
+    "fre-sun-1",
+    "fre-mon-1",
+    "fre-tue-1",
+    "fre-wed-1",
+    "fre-thu-1",
+    "fre-fri-1",
+    "fre-sat-1",
+    "ber-sun-1",
+    "ber-mon-1",
+    "ber-tue-1",
+    "ber-wed-1",
+    "ber-thu-1",
+    "ber-fri-1",
+    "ber-sat-1",
+    "ite-sun-1",
+    "ite-mon-1",
+    "ite-tue-1",
+    "ite-wed-1",
+    "ite-thu-1",
+    "ite-fri-1",
+    "ite-sat-1",
   ],
   p2: ["mon-1", "tue-1"],
 };
@@ -165,6 +279,9 @@ const groupHeadings = ["Ankeny", "SF", "Bermuda", "Lincoln", "Fremont", "ITE"];
 function chunkArray(arr, size) {
   const chunks = [];
   for (let i = 0; i < arr.length; i += size) {
+    if (i === 7) {
+      i = 0;
+    }
     chunks.push(arr.slice(i, i + size));
   }
   return chunks;
