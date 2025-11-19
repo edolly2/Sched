@@ -71,6 +71,7 @@ function getPersonColor(person) {
 // --------------------------------------------------
 
 const shifts = [
+  // Ankeny
   { id: "ank-sun-1", day: "Sun", label: "Overnight Run", hours: 6 },
   { id: "ank-mon-1", day: "Mon", label: "Overnight Run", hours: 6 },
   { id: "ank-tue-1", day: "Tue", label: "Overnight Run", hours: 6 },
@@ -79,6 +80,7 @@ const shifts = [
   { id: "ank-fri-1", day: "Fri", label: "Overnight Run", hours: 6 },
   { id: "ank-sat-1", day: "Sat", label: "Overnight Run", hours: 6 },
 
+  // SF
   { id: "sf-sun-1", day: "Sun", label: "Overnight Run", hours: 6 },
   { id: "sf-mon-1", day: "Mon", label: "Overnight Run", hours: 6 },
   { id: "sf-tue-1", day: "Tue", label: "Overnight Run", hours: 6 },
@@ -87,6 +89,7 @@ const shifts = [
   { id: "sf-fri-1", day: "Fri", label: "Overnight Run", hours: 6 },
   { id: "sf-sat-1", day: "Sat", label: "Overnight Run", hours: 6 },
 
+  // Bermuda
   { id: "ber-sun-1", day: "Sun", label: "1st Run", hours: 6.15 },
   { id: "ber-mon-1", day: "Mon", label: "1st Run", hours: 6.15 },
   { id: "ber-tue-1", day: "Tue", label: "1st Run", hours: 6.15 },
@@ -95,43 +98,48 @@ const shifts = [
   { id: "ber-fri-1", day: "Fri", label: "1st Run", hours: 6.15 },
   { id: "ber-sat-1", day: "Sat", label: "1st Run", hours: 6.15 },
 
-  { id: "mon-10", day: "Mon", label: "1st Run", hours: 4.5 },
-  { id: "mon-11", day: "Mon", label: "1st Run", hours: 4.5 },
-  { id: "mon-12", day: "Mon", label: "1st Run", hours: 4.5 },
+  // Lincoln
+  { id: "lin-sun-1", day: "Sun", label: "1st Run", hours: 4.5 },
+  { id: "lin-mon-1", day: "Mon", label: "1st Run", hours: 4.5 },
+  { id: "lin-tue-1", day: "Tue", label: "1st Run", hours: 4.5 },
+  { id: "lin-wed-1", day: "Wed", label: "1st Run", hours: 4.5 },
+  { id: "lin-thu-1", day: "Thu", label: "1st Run", hours: 4.5 },
+  { id: "lin-fri-1", day: "Fri", label: "1st Run", hours: 4.5 },
+  { id: "lin-sat-1", day: "Sat", label: "1st Run", hours: 4.5 },
 
-  { id: "tue-10", day: "Tue", label: "1st Run", hours: 4.5 },
-  { id: "tue-11", day: "Tue", label: "1st Run", hours: 4.5 },
-  { id: "tue-12", day: "Tue", label: "1st Run", hours: 4.5 },
+  // Fremont
+  { id: "fre-sun-1", day: "Sun", label: "1st Run", hours: 4.45 },
+  { id: "fre-mon-1", day: "Mon", label: "1st Run", hours: 4.45 },
+  { id: "fre-tue-1", day: "Tue", label: "1st Run", hours: 4.45 },
+  { id: "fre-wed-1", day: "Wed", label: "1st Run", hours: 4.45 },
+  { id: "fre-thu-1", day: "Thu", label: "1st Run", hours: 4.45 },
+  { id: "fre-fri-1", day: "Fri", label: "1st Run", hours: 4.45 },
+  { id: "fre-sat-1", day: "Sat", label: "1st Run", hours: 4.45 },
 
-  { id: "wed-4", day: "Wed", label: "1st Run", hours: 4.5 },
-
-  { id: "mon-13", day: "Mon", label: "1st Run", hours: 4.45 },
-  { id: "mon-14", day: "Mon", label: "1st Run", hours: 4.45 },
-  { id: "mon-15", day: "Mon", label: "1st Run", hours: 4.45 },
-
-  { id: "tue-13", day: "Tue", label: "1st Run", hours: 4.45 },
-  { id: "tue-14", day: "Tue", label: "1st Run", hours: 4.45 },
-  { id: "tue-15", day: "Tue", label: "1st Run", hours: 4.45 },
-
-  { id: "wed-5", day: "Wed", label: "1st Run", hours: 4.45 },
-
-  { id: "mon-16", day: "Mon", label: "1st Run", hours: 2.5 },
-  { id: "mon-17", day: "Mon", label: "1st Run", hours: 2.5 },
-  { id: "mon-18", day: "Mon", label: "1st Run", hours: 2.5 },
-
-  { id: "tue-16", day: "Tue", label: "1st Run", hours: 2.5 },
-  { id: "tue-17", day: "Tue", label: "1st Run", hours: 2.5 },
-  { id: "tue-18", day: "Tue", label: "1st Run", hours: 2.5 },
-
-  { id: "wed-6", day: "Wed", label: "1st Run", hours: 2.5 },
+  // ITE
+  { id: "ite-sun-1", day: "Sun", label: "1st Run", hours: 2.5 },
+  { id: "ite-mon-1", day: "Mon", label: "1st Run", hours: 2.5 },
+  { id: "ite-tue-1", day: "Tue", label: "1st Run", hours: 2.5 },
+  { id: "ite-wed-1", day: "Wed", label: "1st Run", hours: 2.5 },
+  { id: "ite-thu-1", day: "Thu", label: "1st Run", hours: 2.5 },
+  { id: "ite-fri-1", day: "Fri", label: "1st Run", hours: 2.5 },
+  { id: "ite-sat-1", day: "Sat", label: "1st Run", hours: 2.5 },
 ];
 
 // PEOPLE - hours stored as MINUTES, with maxHours
 const initialPeople = [
-  { id: "p1", name: "Nicholas", hours: 0, maxHours: 40 },
-  { id: "p2", name: "Basim", hours: 0, maxHours: 40 },
-  { id: "p3", name: "Chelsee", hours: 0, maxHours: 40 },
-  { id: "p4", name: "Quentin", hours: 0, maxHours: 40 },
+  { id: "p1", name: "Basim", hours: 0, maxHours: 24 },
+  { id: "p2", name: "Chelsee", hours: 0, maxHours: 40 },
+  { id: "p3", name: "Colin", hours: 0, maxHours: 40 },
+  { id: "p4", name: "Edward", hours: 0, maxHours: 40 },
+  { id: "p5", name: "Jeremy B", hours: 0, maxHours: 24 },
+  { id: "p6", name: "Kid Diddler", hours: 0, maxHours: 24 },
+  { id: "p7", name: "Lawrence", hours: 0, maxHours: 40 },
+  { id: "p8", name: "Matt", hours: 0, maxHours: 40 },
+  { id: "p9", name: "Michael L", hours: 0, maxHours: 40 },
+  { id: "p10", name: "Nicholas", hours: 0, maxHours: 50 },
+  { id: "p11", name: "Q", hours: 0, maxHours: 40 },
+  { id: "p12", name: "Willis", hours: 0, maxHours: 30 },
 ];
 
 // RULES
