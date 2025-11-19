@@ -136,7 +136,7 @@ const initialPeople = [
 
 // RULES
 const rules = {
-  p1: ["mon-2"], // example, adjust if you want
+  p1: ["ank-sun-1, ank-mon-1, ank-tue-1, ank-thur-1, ank-fri-1, ank-sat-1,"], // example, adjust if you want
   p2: ["mon-1", "tue-1"],
 };
 
