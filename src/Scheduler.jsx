@@ -140,7 +140,8 @@ const rules = {
     "ank-sun-1",
     "ank-mon-1",
     "ank-tue-1",
-    "ank-thur-1",
+    "ank-wed-1",
+    "ank-thu-1",
     "ank-fri-1",
     "ank-sat-1",
   ], // example, adjust if you want
