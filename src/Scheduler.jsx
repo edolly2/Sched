@@ -136,7 +136,7 @@ const initialPeople = [
 
 // RULES
 const rules = {
-  p1: ["mon-2"],
+  p1: ["mon-2"], // example, adjust if you want
   p2: ["mon-1", "tue-1"],
 };
 
@@ -155,76 +155,92 @@ function chunkArray(arr, size) {
 }
 
 // --------------------------------------------------
-// COMPONENT
+// COMPONENT (Tap driver → tap slot, mobile-friendly)
 // --------------------------------------------------
 
 export default function Scheduler() {
   const [people, setPeople] = useState(initialPeople);
   const [shiftAssignments, setShiftAssignments] = useState({});
-  const [draggingPerson, setDraggingPerson] = useState(null);
+  const [selectedPersonId, setSelectedPersonId] = useState(null);
 
-  function onDragStart(person) {
-    setDraggingPerson(person);
+  function handleSelectPerson(personId) {
+    setSelectedPersonId((prev) => (prev === personId ? null : personId));
   }
 
-  function onDropSlot(slot) {
-    if (!draggingPerson) return;
+  function handleSlotClick(slot) {
+    const assignedPersonId = shiftAssignments[slot.id];
+    const slotMinutes = hmToMinutes(slot.hours);
 
-    const restricted = rules[draggingPerson.id]?.includes(slot.id);
-    const occupied = shiftAssignments[slot.id];
-    if (restricted || occupied) return;
+    // NO DRIVER SELECTED → tap slot to clear it (if occupied)
+    if (!selectedPersonId) {
+      if (!assignedPersonId) return;
 
-    // Assign slot
+      setShiftAssignments((prev) => {
+        const updated = { ...prev };
+        delete updated[slot.id];
+        return updated;
+      });
+
+      setPeople((prev) =>
+        prev.map((p) =>
+          p.id === assignedPersonId ? { ...p, hours: p.hours - slotMinutes } : p
+        )
+      );
+
+      return;
+    }
+
+    // DRIVER SELECTED
+    // If slot is restricted for this driver, do nothing
+    const restricted = rules[selectedPersonId]?.includes(slot.id);
+    if (restricted) return;
+
+    // If occupied by someone else, don't overwrite
+    if (assignedPersonId && assignedPersonId !== selectedPersonId) return;
+
+    // If already assigned to this same person, do nothing
+    if (assignedPersonId === selectedPersonId) return;
+
+    // Assign slot to selected driver
     setShiftAssignments((prev) => ({
       ...prev,
-      [slot.id]: draggingPerson.id,
+      [slot.id]: selectedPersonId,
     }));
 
-    // Add minutes to that driver's total
     setPeople((prev) =>
-      prev.map((p) => {
-        if (p.id !== draggingPerson.id) return p;
-
-        const slotMinutes = hmToMinutes(slot.hours);
-        return {
-          ...p,
-          hours: p.hours + slotMinutes,
-        };
-      })
+      prev.map((p) =>
+        p.id === selectedPersonId ? { ...p, hours: p.hours + slotMinutes } : p
+      )
     );
-
-    setDraggingPerson(null);
   }
 
-  function clearSlot(slot) {
+  function clearSlotContext(slot, e) {
+    e.preventDefault();
     const assignedPersonId = shiftAssignments[slot.id];
     if (!assignedPersonId) return;
 
     const slotMinutes = hmToMinutes(slot.hours);
 
     setShiftAssignments((prev) => {
-      const newState = { ...prev };
-      delete newState[slot.id];
-      return newState;
+      const updated = { ...prev };
+      delete updated[slot.id];
+      return updated;
     });
 
     setPeople((prev) =>
-      prev.map((p) => {
-        if (p.id !== assignedPersonId) return p;
-
-        return {
-          ...p,
-          hours: p.hours - slotMinutes,
-        };
-      })
+      prev.map((p) =>
+        p.id === assignedPersonId ? { ...p, hours: p.hours - slotMinutes } : p
+      )
     );
   }
 
   function getSlotColor(slot) {
-    if (!draggingPerson) return "slot";
+    // We only color slots based on assignment + restriction relative
+    // to the currently selected driver (if any)
+    if (!selectedPersonId) return "slot";
 
     const occupied = shiftAssignments[slot.id];
-    const restricted = rules[draggingPerson.id]?.includes(slot.id);
+    const restricted = rules[selectedPersonId]?.includes(slot.id);
 
     if (occupied) return "slot yellow";
     if (restricted) return "slot red";
@@ -241,10 +257,10 @@ export default function Scheduler() {
         {people.map((person) => (
           <div
             key={person.id}
-            draggable
-            className={`person ${getPersonColor(person)}`}
-            onDragStart={() => onDragStart(person)}
-            onDragEnd={() => setDraggingPerson(null)}
+            className={`person ${getPersonColor(person)} ${
+              selectedPersonId === person.id ? "person-selected" : ""
+            }`}
+            onClick={() => handleSelectPerson(person.id)}
           >
             {person.name} — {formatMinutesForDisplay(person.hours)}
           </div>
@@ -266,12 +282,8 @@ export default function Scheduler() {
                 <div
                   key={slot.id}
                   className={getSlotColor(slot)}
-                  onDragOver={(e) => e.preventDefault()}
-                  onDrop={() => onDropSlot(slot)}
-                  onContextMenu={(e) => {
-                    e.preventDefault();
-                    clearSlot(slot);
-                  }}
+                  onClick={() => handleSlotClick(slot)} // mobile + desktop tap
+                  onContextMenu={(e) => clearSlotContext(slot, e)} // right-click clear on desktop
                 >
                   <div className="slot-container">
                     <b className="slot-day">{slot.day}</b>
@@ -286,7 +298,9 @@ export default function Scheduler() {
                       : ""}
                   </div>
 
-                  <div className="clear-hint">(right-click to clear)</div>
+                  <div className="clear-hint">
+                    (tap with no driver selected to clear / right-click)
+                  </div>
                 </div>
               ))}
             </div>

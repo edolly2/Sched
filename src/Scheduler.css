@@ -4,13 +4,20 @@ h2 {
 
 .scheduler-container {
   display: flex;
+  flex-direction: row;
   gap: 20px;
   padding: 20px;
   font-family: Arial, sans-serif;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* ------------------------------------------
+   PEOPLE PANEL
+------------------------------------------- */
 .people-panel {
   width: 240px;
+  min-width: 200px;
   border-right: 2px solid #222;
   padding-right: 20px;
 }
@@ -20,36 +27,51 @@ h2 {
   background: #ddd;
   border-radius: 6px;
   margin-bottom: 10px;
-  cursor: grab;
+  cursor: pointer;
   font-size: 16px;
   font-weight: bold;
-  flex-grow: 1;
+  user-select: none;
 }
 
+/* Highlight the currently selected person */
+.person-selected {
+  outline: 3px solid #007bff;
+  background: #cde3ff !important;
+}
+
+/* ------------------------------------------
+   GRID
+------------------------------------------- */
 .grid {
   flex: 1;
+  min-width: 0;
 }
 
+/* 7-column grid (desktop) */
 .grid-layout {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
+  grid-template-columns: repeat(7, minmax(80px, 1fr));
+  gap: 4px;
 }
 
 .slot {
   background: #f5f5f5;
   border-radius: 10px;
-  height: 100px;
+  height: 120px;
   padding: 6px;
   border: 2px solid #ccc;
   transition: 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  touch-action: manipulation;
 }
 
 .slot-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  text-align: center;
 }
 
 .slot-day {
@@ -57,18 +79,8 @@ h2 {
 }
 
 .slot-label {
-  font-size: 10px;
+  font-size: 11px;
   color: rgb(5, 132, 236);
-}
-
-.slot-hours {
-  font-size: 10px;
-}
-
-.slot .assigned {
-  margin-top: 12px;
-  font-size: 16px;
-  font-weight: bold;
 }
 
 .slot-hours {
@@ -77,10 +89,16 @@ h2 {
   margin-top: 2px;
 }
 
+.slot .assigned {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
 .clear-hint {
   font-size: 11px;
   opacity: 0.35;
-  margin-top: 8px;
+  text-align: center;
 }
 
 .group-heading {
@@ -90,51 +108,107 @@ h2 {
   color: rgb(5, 132, 236);
 }
 
-/* COLOR STATES */
-.green {
+/* ------------------------------------------
+   SLOT COLORS (matching your logic & classes)
+------------------------------------------- */
+.slot.green {
   border-color: green;
   background: #d5f8d5;
 }
 
-.red {
+.slot.red {
   border-color: red;
   background: #f8d5d5;
 }
 
-.yellow {
+.slot.yellow {
   border-color: goldenrod;
   background: #fff5c2;
 }
 
+/* ------------------------------------------
+   PERSON COLOR STATES
+------------------------------------------- */
+
 .green-person {
   background-color: #2ecc71 !important;
-  color: white;
+  color: white !important;
 }
 
 .yellow-person {
   background-color: #f1c40f !important;
-  color: black;
+  color: black !important;
 }
 
 .red-person {
   background-color: #e74c3c !important;
-  color: white;
+  color: white !important;
 }
 
+/* RED + ALERT */
 .alert::after {
-  content: "!!!";
+  content: " ❗";
   font-weight: bold;
   color: #fbff00;
-  font-size: 24px;
+  font-size: 20px;
+  padding-left: 5px;
 }
 
-.red-person.alert {
-  display: flex;
-  flex-wrap: nowrap;
-  white-space: nowrap;
-  flex-direction: row;
-  gap: 2px;
-  flex-grow: 1;
-  align-items: center;
-  color: #fbff00;
+/* ------------------------------------------
+   RESPONSIVE LAYOUT — MOBILE & TABLET
+------------------------------------------- */
+
+/* Stack layout vertically on tablets + phones */
+@media (max-width: 900px) {
+  .scheduler-container {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .people-panel {
+    width: 100%;
+    border-right: none;
+    border-bottom: 2px solid #222;
+    padding-bottom: 12px;
+    margin-bottom: 15px;
+  }
+}
+
+/* Switch grid layout for phones */
+@media (max-width: 768px) {
+  .grid-layout {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on mobile */
+    gap: 6px;
+  }
+
+  .slot {
+    height: 110px;
+  }
+
+  .slot-label,
+  .slot-day,
+  .slot-hours {
+    font-size: 10px;
+  }
+
+  .assigned {
+    font-size: 14px !important;
+  }
+}
+
+/* VERY small phones */
+@media (max-width: 480px) {
+  .grid-layout {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  }
+
+  .slot {
+    height: 100px;
+  }
+
+  .slot-label,
+  .slot-day,
+  .slot-hours {
+    font-size: 9px;
+  }
 }
