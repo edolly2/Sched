@@ -5,12 +5,6 @@ import "./Scheduler.css";
 // TIME FUNCTIONS
 // --------------------------------------------------
 
-// Convert H.MM style into minutes:
-// 6      -> 6h 0m
-// 6.15   -> 6h 15m
-// 4.45   -> 4h 45m
-// 4.5    -> 4h 30m  (half hour)
-// 2.5    -> 2h 30m  (half hour)
 function hmToMinutes(num) {
   const [hStr, mStr] = num.toString().split(".");
   const h = parseInt(hStr, 10) || 0;
@@ -20,18 +14,14 @@ function hmToMinutes(num) {
   let minutes;
 
   if (mStr.length === 1) {
-    // Single digit means decimal (.5 = 30 min)
     const frac = parseFloat(`0.${mStr}`);
     minutes = Math.round(frac * 60);
   } else {
-    // Two digits are literal minutes (.15 = 15 min, .45 = 45 min)
     minutes = parseInt(mStr, 10) || 0;
   }
-
   return h * 60 + minutes;
 }
 
-// Format minutes into human-readable text
 function formatMinutesForDisplay(totalMinutes) {
   const h = Math.floor(totalMinutes / 60);
   const m = totalMinutes % 60;
@@ -41,41 +31,28 @@ function formatMinutesForDisplay(totalMinutes) {
 }
 
 // --------------------------------------------------
-// COLOR LOGIC (BASED ONLY ON CURRENT HOURS)
+// PERSON COLOR LOGIC
 // --------------------------------------------------
-//
-// RED if current < max - 10h
-// YELLOW if between 10h and 5h below max
-// GREEN if within 5h below max up to 5h over max
-// RED + !! if current > max + 5h
-//
+
 function getPersonColor(person) {
-  const current = person.hours; // minutes
-  const max = person.maxHours * 60; // minutes
+  const current = person.hours;
+  const max = person.maxHours * 60;
 
-  // More than 5 hours over max = RED + ALERT
   if (current > max + 300) return "red-person alert";
-
-  // More than 10 hours below max = RED
   if (current < max - 600) return "red-person";
-
-  // Between 10 hours and 5 hours below max = YELLOW
   if (current >= max - 600 && current < max - 300) return "yellow-person";
-
-  // Within 5 hours below max up to 5 hours over max = GREEN
   return "green-person";
 }
 
 // --------------------------------------------------
-// CONFIG
+// FULL SHIFT LIST
 // --------------------------------------------------
 
 const shifts = [
   // --------------------------------------------------
-  // Overnight
+  // OVERNIGHT RUN — ANKENY
   // --------------------------------------------------
 
-  // Ankeny
   { id: "ank-sun-1", day: "Sun", label: "Overnight Run", hours: 6 },
   { id: "ank-mon-1", day: "Mon", label: "Overnight Run", hours: 6 },
   { id: "ank-tue-1", day: "Tue", label: "Overnight Run", hours: 6 },
@@ -84,7 +61,10 @@ const shifts = [
   { id: "ank-fri-1", day: "Fri", label: "Overnight Run", hours: 6 },
   { id: "ank-sat-1", day: "Sat", label: "Overnight Run", hours: 6 },
 
-  // SF
+  // --------------------------------------------------
+  // OVERNIGHT RUN — SIOUX FALLS
+  // --------------------------------------------------
+
   { id: "sf-sun-1", day: "Sun", label: "Overnight Run", hours: 6 },
   { id: "sf-mon-1", day: "Mon", label: "Overnight Run", hours: 6 },
   { id: "sf-tue-1", day: "Tue", label: "Overnight Run", hours: 6 },
@@ -92,12 +72,10 @@ const shifts = [
   { id: "sf-thu-1", day: "Thu", label: "Overnight Run", hours: 6 },
   { id: "sf-fri-1", day: "Fri", label: "Overnight Run", hours: 6 },
   { id: "sf-sat-1", day: "Sat", label: "Overnight Run", hours: 6 },
-
   // --------------------------------------------------
-  // 1st Run
+  // 1ST RUN — BERMUDA
   // --------------------------------------------------
 
-  // Bermuda 1
   { id: "ber-sun-1", day: "Sun", label: "1st Run", hours: 6.15 },
   { id: "ber-mon-1", day: "Mon", label: "1st Run", hours: 6.15 },
   { id: "ber-tue-1", day: "Tue", label: "1st Run", hours: 6.15 },
@@ -106,7 +84,10 @@ const shifts = [
   { id: "ber-fri-1", day: "Fri", label: "1st Run", hours: 6.15 },
   { id: "ber-sat-1", day: "Sat", label: "1st Run", hours: 6.15 },
 
-  // Lincoln 1
+  // --------------------------------------------------
+  // 1ST RUN — LINCOLN
+  // --------------------------------------------------
+
   { id: "lin-sun-1", day: "Sun", label: "1st Run", hours: 4.5 },
   { id: "lin-mon-1", day: "Mon", label: "1st Run", hours: 4.5 },
   { id: "lin-tue-1", day: "Tue", label: "1st Run", hours: 4.5 },
@@ -115,7 +96,10 @@ const shifts = [
   { id: "lin-fri-1", day: "Fri", label: "1st Run", hours: 4.5 },
   { id: "lin-sat-1", day: "Sat", label: "1st Run", hours: 4.5 },
 
-  // Fremont 1
+  // --------------------------------------------------
+  // 1ST RUN — FREMONT
+  // --------------------------------------------------
+
   { id: "fre-sun-1", day: "Sun", label: "1st Run", hours: 4.45 },
   { id: "fre-mon-1", day: "Mon", label: "1st Run", hours: 4.45 },
   { id: "fre-tue-1", day: "Tue", label: "1st Run", hours: 4.45 },
@@ -124,7 +108,10 @@ const shifts = [
   { id: "fre-fri-1", day: "Fri", label: "1st Run", hours: 4.45 },
   { id: "fre-sat-1", day: "Sat", label: "1st Run", hours: 4.45 },
 
-  // ITE 1
+  // --------------------------------------------------
+  // 1ST RUN — IN TOWN EAST (ITE)
+  // --------------------------------------------------
+
   { id: "ite-sun-1", day: "Sun", label: "1st Run", hours: 2.5 },
   { id: "ite-mon-1", day: "Mon", label: "1st Run", hours: 2.5 },
   { id: "ite-tue-1", day: "Tue", label: "1st Run", hours: 2.5 },
@@ -134,10 +121,9 @@ const shifts = [
   { id: "ite-sat-1", day: "Sat", label: "1st Run", hours: 2.5 },
 
   // --------------------------------------------------
-  // 2nd Run
+  // 2ND RUN — BERMUDA
   // --------------------------------------------------
 
-  // Bermuda 2
   { id: "ber-sun-2", day: "Sun", label: "2nd Run", hours: 6.15 },
   { id: "ber-mon-2", day: "Mon", label: "2nd Run", hours: 6.15 },
   { id: "ber-tue-2", day: "Tue", label: "2nd Run", hours: 6.15 },
@@ -146,7 +132,10 @@ const shifts = [
   { id: "ber-fri-2", day: "Fri", label: "2nd Run", hours: 6.15 },
   { id: "ber-sat-2", day: "Sat", label: "2nd Run", hours: 6.15 },
 
-  // Lincoln 2
+  // --------------------------------------------------
+  // 2ND RUN — LINCOLN
+  // --------------------------------------------------
+
   { id: "lin-sun-2", day: "Sun", label: "2nd Run", hours: 4.5 },
   { id: "lin-mon-2", day: "Mon", label: "2nd Run", hours: 4.5 },
   { id: "lin-tue-2", day: "Tue", label: "2nd Run", hours: 4.5 },
@@ -155,7 +144,10 @@ const shifts = [
   { id: "lin-fri-2", day: "Fri", label: "2nd Run", hours: 4.5 },
   { id: "lin-sat-2", day: "Sat", label: "2nd Run", hours: 4.5 },
 
-  // Fremont 2
+  // --------------------------------------------------
+  // 2ND RUN — FREMONT
+  // --------------------------------------------------
+
   { id: "fre-sun-2", day: "Sun", label: "2nd Run", hours: 4.45 },
   { id: "fre-mon-2", day: "Mon", label: "2nd Run", hours: 4.45 },
   { id: "fre-tue-2", day: "Tue", label: "2nd Run", hours: 4.45 },
@@ -164,7 +156,10 @@ const shifts = [
   { id: "fre-fri-2", day: "Fri", label: "2nd Run", hours: 4.45 },
   { id: "fre-sat-2", day: "Sat", label: "2nd Run", hours: 4.45 },
 
-  // ITE 2
+  // --------------------------------------------------
+  // 2ND RUN — IN TOWN EAST (ITE)
+  // --------------------------------------------------
+
   { id: "ite-sun-2", day: "Sun", label: "2nd Run", hours: 2.5 },
   { id: "ite-mon-2", day: "Mon", label: "2nd Run", hours: 2.5 },
   { id: "ite-tue-2", day: "Tue", label: "2nd Run", hours: 2.5 },
@@ -172,12 +167,10 @@ const shifts = [
   { id: "ite-thu-2", day: "Thu", label: "2nd Run", hours: 2.5 },
   { id: "ite-fri-2", day: "Fri", label: "2nd Run", hours: 2.5 },
   { id: "ite-sat-2", day: "Sat", label: "2nd Run", hours: 2.5 },
-
   // --------------------------------------------------
-  // 3rd Run
+  // 3RD RUN — LINCOLN
   // --------------------------------------------------
 
-  // Lincoln 3
   { id: "lin-sun-3", day: "Sun", label: "3rd Run", hours: 4.5 },
   { id: "lin-mon-3", day: "Mon", label: "3rd Run", hours: 4.5 },
   { id: "lin-tue-3", day: "Tue", label: "3rd Run", hours: 4.5 },
@@ -186,7 +179,10 @@ const shifts = [
   { id: "lin-fri-3", day: "Fri", label: "3rd Run", hours: 4.5 },
   { id: "lin-sat-3", day: "Sat", label: "3rd Run", hours: 4.5 },
 
-  // Fremont 3
+  // --------------------------------------------------
+  // 3RD RUN — FREMONT
+  // --------------------------------------------------
+
   { id: "fre-sun-3", day: "Sun", label: "3rd Run", hours: 4.45 },
   { id: "fre-mon-3", day: "Mon", label: "3rd Run", hours: 4.45 },
   { id: "fre-tue-3", day: "Tue", label: "3rd Run", hours: 4.45 },
@@ -195,7 +191,10 @@ const shifts = [
   { id: "fre-fri-3", day: "Fri", label: "3rd Run", hours: 4.45 },
   { id: "fre-sat-3", day: "Sat", label: "3rd Run", hours: 4.45 },
 
-  // ITE 3
+  // --------------------------------------------------
+  // 3RD RUN — IN TOWN EAST (ITE)
+  // --------------------------------------------------
+
   { id: "ite-sun-3", day: "Sun", label: "3rd Run", hours: 2.5 },
   { id: "ite-mon-3", day: "Mon", label: "3rd Run", hours: 2.5 },
   { id: "ite-tue-3", day: "Tue", label: "3rd Run", hours: 2.5 },
@@ -205,7 +204,10 @@ const shifts = [
   { id: "ite-sat-3", day: "Sat", label: "3rd Run", hours: 2.5 },
 ];
 
-// PEOPLE - hours stored as MINUTES, with maxHours
+// --------------------------------------------------
+// PEOPLE
+// --------------------------------------------------
+
 const initialPeople = [
   { id: "p1", name: "Basim", hours: 0, maxHours: 24 },
   { id: "p2", name: "Chelsee", hours: 0, maxHours: 40 },
@@ -221,7 +223,10 @@ const initialPeople = [
   { id: "p12", name: "Willis", hours: 0, maxHours: 30 },
 ];
 
+// --------------------------------------------------
 // RULES
+// --------------------------------------------------
+
 const rules = {
   p1: [
     "ank-sun-1",
@@ -270,71 +275,68 @@ const rules = {
   p2: ["mon-1", "tue-1"],
 };
 
-const groupHeadings = ["Ankeny", "SF", "Bermuda", "Lincoln", "Fremont", "ITE"];
-
 // --------------------------------------------------
-// HELPERS
+// GROUP BY LABEL ("Overnight Run", "1st Run", "2nd Run", "3rd Run")
 // --------------------------------------------------
 
-function chunkArray(arr, size) {
-  const chunks = [];
-  for (let i = 0; i < arr.length; i += size) {
-    if (i === 7) {
-      i = 0;
-    }
-    chunks.push(arr.slice(i, i + size));
-  }
-  return chunks;
+function groupByLabel(shifts) {
+  const out = {};
+  shifts.forEach((s) => {
+    if (!out[s.label]) out[s.label] = [];
+    out[s.label].push(s);
+  });
+  return out;
 }
 
 // --------------------------------------------------
-// COMPONENT
+// MAIN COMPONENT
 // --------------------------------------------------
 
 export default function Scheduler() {
   const [people, setPeople] = useState(initialPeople);
   const [shiftAssignments, setShiftAssignments] = useState({});
   const [selectedPersonId, setSelectedPersonId] = useState(null);
+  const [openGroup, setOpenGroup] = useState(null);
 
-  function handleSelectPerson(personId) {
-    setSelectedPersonId((prev) => (prev === personId ? null : personId));
+  // Select a driver
+  function handleSelectPerson(id) {
+    setSelectedPersonId((prev) => (prev === id ? null : id));
   }
 
+  // Tap a slot (assign or clear)
   function handleSlotClick(slot) {
-    const assignedPersonId = shiftAssignments[slot.id];
-    const slotMinutes = hmToMinutes(slot.hours);
+    const assigned = shiftAssignments[slot.id];
+    const mins = hmToMinutes(slot.hours);
 
-    // NO DRIVER SELECTED = tap slot to clear it (if occupied)
+    // If no driver selected -> tap clears
     if (!selectedPersonId) {
-      if (!assignedPersonId) return;
+      if (!assigned) return;
 
       setShiftAssignments((prev) => {
-        const updated = { ...prev };
-        delete updated[slot.id];
-        return updated;
+        const u = { ...prev };
+        delete u[slot.id];
+        return u;
       });
 
       setPeople((prev) =>
         prev.map((p) =>
-          p.id === assignedPersonId ? { ...p, hours: p.hours - slotMinutes } : p
+          p.id === assigned ? { ...p, hours: p.hours - mins } : p
         )
       );
 
       return;
     }
 
-    // DRIVER SELECTED
-    // If slot is restricted for this driver, do nothing
-    const restricted = rules[selectedPersonId]?.includes(slot.id);
-    if (restricted) return;
+    // If slot restricted -> do nothing
+    if (rules[selectedPersonId]?.includes(slot.id)) return;
 
-    // If occupied by someone else, don't overwrite
-    if (assignedPersonId && assignedPersonId !== selectedPersonId) return;
+    // If someone else assigned -> do nothing
+    if (assigned && assigned !== selectedPersonId) return;
 
-    // If already assigned to this same person, do nothing
-    if (assignedPersonId === selectedPersonId) return;
+    // If same driver already assigned -> do nothing
+    if (assigned === selectedPersonId) return;
 
-    // Assign slot to selected driver
+    // Assign
     setShiftAssignments((prev) => ({
       ...prev,
       [slot.id]: selectedPersonId,
@@ -342,100 +344,112 @@ export default function Scheduler() {
 
     setPeople((prev) =>
       prev.map((p) =>
-        p.id === selectedPersonId ? { ...p, hours: p.hours + slotMinutes } : p
+        p.id === selectedPersonId ? { ...p, hours: p.hours + mins } : p
       )
     );
   }
 
+  // Right-click clear (desktop)
   function clearSlotContext(slot, e) {
     e.preventDefault();
-    const assignedPersonId = shiftAssignments[slot.id];
-    if (!assignedPersonId) return;
+    const assigned = shiftAssignments[slot.id];
+    if (!assigned) return;
 
-    const slotMinutes = hmToMinutes(slot.hours);
+    const mins = hmToMinutes(slot.hours);
 
     setShiftAssignments((prev) => {
-      const updated = { ...prev };
-      delete updated[slot.id];
-      return updated;
+      const u = { ...prev };
+      delete u[slot.id];
+      return u;
     });
 
     setPeople((prev) =>
-      prev.map((p) =>
-        p.id === assignedPersonId ? { ...p, hours: p.hours - slotMinutes } : p
-      )
+      prev.map((p) => (p.id === assigned ? { ...p, hours: p.hours - mins } : p))
     );
   }
 
+  // Slot coloring for assignment previews
   function getSlotColor(slot) {
-    // Only color slots based on assignment + restriction
     if (!selectedPersonId) return "slot";
 
-    const occupied = shiftAssignments[slot.id];
+    const assigned = shiftAssignments[slot.id];
     const restricted = rules[selectedPersonId]?.includes(slot.id);
 
-    if (occupied) return "slot yellow";
+    if (assigned) return "slot yellow";
     if (restricted) return "slot red";
     return "slot green";
   }
 
-  const groupedShifts = chunkArray(shifts, 7);
+  const labelGroups = groupByLabel(shifts);
+
+  // --------------------------------------------------
+  // RENDER
+  // --------------------------------------------------
 
   return (
     <div className="scheduler-container">
-      {/* PEOPLE SIDEBAR */}
+      {/* LEFT PANEL — DRIVERS */}
       <div className="people-panel">
         <h3>Drivers</h3>
-        {people.map((person) => (
+
+        {people.map((p) => (
           <div
-            key={person.id}
-            className={`person ${getPersonColor(person)} ${
-              selectedPersonId === person.id ? "person-selected" : ""
+            key={p.id}
+            className={`person ${getPersonColor(p)} ${
+              selectedPersonId === p.id ? "person-selected" : ""
             }`}
-            onClick={() => handleSelectPerson(person.id)}
+            onClick={() => handleSelectPerson(p.id)}
           >
-            {person.name} — {formatMinutesForDisplay(person.hours)}
+            {p.name} — {formatMinutesForDisplay(p.hours)}
           </div>
         ))}
       </div>
 
-      {/* GRID */}
+      {/* RIGHT PANEL — GROUPED SHIFTS */}
       <div className="grid">
         <h2>Weekly Schedule</h2>
 
-        {groupedShifts.map((group, groupIndex) => (
-          <div key={groupIndex} className="slot-group">
-            <h3 className="group-heading">
-              {groupHeadings[groupIndex] || `Block ${groupIndex + 1}`}
+        {Object.keys(labelGroups).map((label) => (
+          <div key={label} className="slot-group">
+            {/* COLLAPSIBLE HEADER */}
+            <h3
+              className="group-heading"
+              onClick={() =>
+                setOpenGroup((prev) => (prev === label ? null : label))
+              }
+              style={{ cursor: "pointer" }}
+            >
+              {label} {openGroup === label ? "▼" : "▶"}
             </h3>
 
-            <div className="grid-layout">
-              {group.map((slot) => (
-                <div
-                  key={slot.id}
-                  className={getSlotColor(slot)}
-                  onClick={() => handleSlotClick(slot)} // mobile + desktop tap
-                  onContextMenu={(e) => clearSlotContext(slot, e)} // right-click clear on desktop
-                >
-                  <div className="slot-container">
-                    <b className="slot-day">{slot.day}</b>
-                    <b className="slot-label">{slot.label}</b>
-                    <em className="slot-hours">{slot.hours} hrs</em>
-                  </div>
+            {/* COLLAPSIBLE BODY */}
+            {openGroup === label && (
+              <div className="grid-layout">
+                {labelGroups[label].map((slot) => (
+                  <div
+                    key={slot.id}
+                    className={getSlotColor(slot)}
+                    onClick={() => handleSlotClick(slot)}
+                    onContextMenu={(e) => clearSlotContext(slot, e)}
+                  >
+                    <div className="slot-container">
+                      <b className="slot-day">{slot.day}</b>
+                      <b className="slot-label">{slot.label}</b>
+                      <em className="slot-hours">{slot.hours} hrs</em>
+                    </div>
 
-                  <div className="assigned">
-                    {shiftAssignments[slot.id]
-                      ? people.find((p) => p.id === shiftAssignments[slot.id])
-                          ?.name
-                      : ""}
-                  </div>
+                    <div className="assigned">
+                      {shiftAssignments[slot.id]
+                        ? people.find((p) => p.id === shiftAssignments[slot.id])
+                            ?.name
+                        : ""}
+                    </div>
 
-                  <div className="clear-hint">
-                    (tap with no driver selected to clear / right-click)
+                    <div className="clear-hint">(tap to assign / clear)</div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         ))}
       </div>
