@@ -147,7 +147,7 @@ h2 {
 
 /* RED + ALERT */
 .alert::after {
-  content: " ❗";
+  content: " !!";
   font-weight: bold;
   color: #fbff00;
   font-size: 20px;
